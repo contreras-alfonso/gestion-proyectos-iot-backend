@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv'
 import cors from 'cors'
+import imagenesRouter from './routes/imagenesRouter.js';
 import plantasRouter from './routes/plantasRouter.js';
 import conectarDB from './config/db.js';
 import { fileURLToPath } from 'url';
@@ -10,6 +11,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+
+app.use(express.json())
 
 dotenv.config()
 
@@ -23,7 +26,8 @@ app.use(cors(corsOptions))
 
 app.use('/images', express.static(join(__dirname, 'public', 'images')));
 
-app.use('/imagenesPlantas',plantasRouter);
+app.use('/imagenesPlantas',imagenesRouter);
+app.use('/plantas',plantasRouter);
 
 
 
