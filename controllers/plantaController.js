@@ -13,6 +13,12 @@ const addPlanta = async (req,res) => {
     }
 }
 
+const getPlanta = async (req,res) => {
+    const planta = await Planta.findById('6557f6371c63c6b93f684be7');
+    console.log(planta);
+    res.json(planta);
+}
+
 const getPlantas = async (req,res) => {
     const plantas = await Planta.find();
     res.json(plantas);
@@ -21,4 +27,5 @@ const getPlantas = async (req,res) => {
 export{
     addPlanta,
     getPlantas,
+    getPlanta,
 }

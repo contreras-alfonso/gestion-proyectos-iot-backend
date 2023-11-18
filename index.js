@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import imagenesRouter from './routes/imagenesRouter.js';
 import plantasRouter from './routes/plantasRouter.js';
+import dispositivosRouter from './routes/dispositivosRouter.js';
 import conectarDB from './config/db.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -28,6 +29,7 @@ app.use('/images', express.static(join(__dirname, 'public', 'images')));
 
 app.use('/imagenesPlantas',imagenesRouter);
 app.use('/plantas',plantasRouter);
+app.use('/dispositivos', dispositivosRouter);
 
 
 
