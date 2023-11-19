@@ -7,6 +7,7 @@ import dispositivosRouter from './routes/dispositivosRouter.js';
 import conectarDB from './config/db.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import sensoresRouter from './routes/sensoresRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -30,6 +31,7 @@ app.use('/images', express.static(join(__dirname, 'public', 'images')));
 app.use('/imagenesPlantas',imagenesRouter);
 app.use('/plantas',plantasRouter);
 app.use('/dispositivos', dispositivosRouter);
+app.use('/sensores', sensoresRouter);
 
 
 

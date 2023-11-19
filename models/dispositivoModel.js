@@ -10,7 +10,7 @@ const dispositivoSchema = mongoose.Schema({
         required:true,
     },
     estado:{
-        type: String,
+        type: Boolean,
         required: true,
         default: false,
     },
