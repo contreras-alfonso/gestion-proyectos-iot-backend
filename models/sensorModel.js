@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { getFecha, getHora } from "../helpers/helpers.js";
 
 const sensorSchema = mongoose.Schema({
    humedadAmbiente:{
@@ -6,6 +7,18 @@ const sensorSchema = mongoose.Schema({
     required:true,
    },
    humedadSuelo:{
+    type:String,
+    required: true,
+   },
+   temperatura:{
+    type:String,
+    required:true,
+   },
+   fecha:{
+    type:String,
+    required: true,
+   },
+   hora:{
     type:String,
     required: true,
    },

@@ -1,4 +1,4 @@
-import getRandomTemperature from "../helpers/getTemperature.js";
+import { getFecha, getHora, getRandomHumedadAmbiente, getRandomHumedadSuelo, getRandomTemperature } from "../helpers/helpers.js";
 import Dispositivo from "../models/dispositivoModel.js";
 import Sensor from "../models/sensorModel.js";
 
@@ -18,11 +18,13 @@ const testAddData = async (req,res) => {
         const dispositivo = [dispositivo1, dispositivo2, dispositivo3, dispositivo4, dispositivo5, dispositivo6][index];
 
         if (dispositivo.estado) {
-            console.log(dispositivo)
             const sensores = new Sensor({
-                humedadAmbiente: getRandomTemperature(23,29),
-                humedadSuelo: getRandomTemperature(23,29),
+                humedadAmbiente: getRandomHumedadAmbiente(),
+                humedadSuelo: getRandomHumedadSuelo(),
+                temperatura: await getRandomTemperature(),
                 dispositivo: dispositivo._id,
+                fecha: await getFecha(),
+                hora: await getHora(),
             })
             await sensores.save();
         } 
@@ -32,7 +34,22 @@ const testAddData = async (req,res) => {
 const getAll = async (req,res) => {
     const {id} = req.params;
     const dataSensores = await Sensor.find({dispositivo:id});
-    res.json(dataSensores);
+    // res.json(dataSensores);
+    const dataModificada = dataSensores.map((e,i)=>{
+        const {humedadAmbiente,humedadSuelo,temperatura,fecha,hora,_id} = e;
+        const fechaFormat = fecha.split('-');
+        const horaFormat = hora.split(':');
+        return {
+            humedadAmbiente,
+            humedadSuelo,
+            fechaYhora: fechaFormat[1]+"-"+fechaFormat[2]+" "+horaFormat[0]+":"+horaFormat[1],
+            _id,
+            temperatura,
+            numeroReporte: i+1,
+        }
+    })
+
+    res.json(dataModificada.reverse());
 }
 
 export{

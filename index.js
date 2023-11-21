@@ -8,6 +8,7 @@ import conectarDB from './config/db.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import sensoresRouter from './routes/sensoresRouter.js';
+import dashboardRouter from './routes/dashboardRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,7 +33,7 @@ app.use('/imagenesPlantas',imagenesRouter);
 app.use('/plantas',plantasRouter);
 app.use('/dispositivos', dispositivosRouter);
 app.use('/sensores', sensoresRouter);
-
+app.use('/dashboard',dashboardRouter)
 
 
 // Tu servidor escucha en el puerto 3000
