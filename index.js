@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import sensoresRouter from './routes/sensoresRouter.js';
 import dashboardRouter from './routes/dashboardRouter.js';
+import usuarioRouter from './routes/usuarioRouter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -34,7 +35,7 @@ app.use('/plantas',plantasRouter);
 app.use('/dispositivos', dispositivosRouter);
 app.use('/sensores', sensoresRouter);
 app.use('/dashboard',dashboardRouter)
-
+app.use('/users',usuarioRouter);
 
 // Tu servidor escucha en el puerto 3000
 app.listen(process.env.PORT, () => {

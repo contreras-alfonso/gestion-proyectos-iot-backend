@@ -1,5 +1,6 @@
 import { getFecha, getHora, getRandomHumedadAmbiente, getRandomHumedadSuelo, getRandomTemperature } from "../helpers/helpers.js";
 import Dispositivo from "../models/dispositivoModel.js";
+import Notificacion from "../models/notificacionModel.js";
 import Sensor from "../models/sensorModel.js";
 
 const testAddData = async (req,res) => {
@@ -31,6 +32,20 @@ const testAddData = async (req,res) => {
     }
 }
 
+const testSensor = async (req,res) => {
+    
+    const {_id} = req.body;
+    const dispositivo = await Dispositivo.findById(_id);
+    const notificacion = new Notificacion();
+    notificacion.estado = "3";
+    notificacion.hora = await getHora();
+    notificacion.fecha = await getFecha();
+    notificacion.dispositivo = dispositivo;
+    await notificacion.save();
+    res.json({notificacion});
+
+}
+
 const getAll = async (req,res) => {
     const {id} = req.params;
     const dataSensores = await Sensor.find({dispositivo:id});
@@ -55,5 +70,5 @@ const getAll = async (req,res) => {
 export{
     testAddData,
     getAll,
-
+    testSensor,
 }

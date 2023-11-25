@@ -1,9 +1,11 @@
+import { getFecha, getHora, getRandomHumedadAmbiente, getRandomHumedadSuelo, getRandomTemperature } from "../helpers/helpers.js";
 import Dispositivo from "../models/dispositivoModel.js";
+import Notificacion from "../models/notificacionModel.js";
 import Planta from "../models/plantaModel.js"
+import Sensor from "../models/sensorModel.js";
 
 const addDispositivo = async (req,res) => {
     const planta = await Planta.findById('6557f6371c63c6b93f684be7');
-    // const {nombre,numeroDispositivo} = req.body;
     const dispositivo = new Dispositivo(req.body);
     await dispositivo.save();
 }
@@ -38,7 +40,15 @@ const updateEstadoDispositivo = async (req,res) => {
     const dispositivo = await Dispositivo.findById(id);
     dispositivo.estado = !dispositivo.estado;
     const dispositivoUpdate = await dispositivo.save(); 
-    dispositivoUpdate.estado ? res.json({msg:'Sistema activado.'}) : res.json({msg:'Sistema desactivado.'})
+
+    const notificacion = new Notificacion();
+    dispositivo.estado ? notificacion.estado = "1" : notificacion.estado = "2" ;
+    notificacion.hora = await getHora();
+    notificacion.fecha = await getFecha();
+    notificacion.dispositivo = dispositivo;
+    await notificacion.save();
+
+    dispositivoUpdate.estado ? res.json({msg:'Sistema encendido.'}) : res.json({msg:'Sistema apagado.'})
 }
 
 const updateAsignarPlantaDispositivo = async (req,res) => {
@@ -53,6 +63,32 @@ const updateAsignarPlantaDispositivo = async (req,res) => {
     }
 }
 
+const activarRiegoManual = async (req,res) => {
+    const {_id} = req.body;
+    const dispositivo = await Dispositivo.findById(_id);
+    if (dispositivo.estado) {
+        const sensores = new Sensor({
+            humedadAmbiente: getRandomHumedadAmbiente(),
+            humedadSuelo: getRandomHumedadSuelo(),
+            temperatura: await getRandomTemperature(),
+            dispositivo: dispositivo._id,
+            fecha: await getFecha(),
+            hora: await getHora(),
+        })
+
+        const notificacion = new Notificacion();
+        notificacion.estado = "3";
+        notificacion.hora = await getHora();
+        notificacion.fecha = await getFecha();
+        notificacion.dispositivo = dispositivo;
+        await notificacion.save();
+        await sensores.save();
+        res.json({status:true,msg:'Riego activado'});
+    }else{
+        res.json({status:false,msg:'Primero enciende el sistema'});
+    } 
+}
+
  
 export {
     addDispositivo,
@@ -60,5 +96,6 @@ export {
     getDispositivos,
     updateDesvincularDispositivo,
     updateEstadoDispositivo,
-    updateAsignarPlantaDispositivo
+    updateAsignarPlantaDispositivo,
+    activarRiegoManual
 }
