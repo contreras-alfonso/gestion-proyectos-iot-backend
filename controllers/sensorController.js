@@ -21,7 +21,7 @@ const testAddData = async (req,res) => {
         if (dispositivo.estado) {
             const sensores = new Sensor({
                 humedadAmbiente: getRandomHumedadAmbiente(),
-                humedadSuelo: getRandomHumedadSuelo(1020,1024),
+                humedadSuelo: getRandomHumedadSuelo(),
                 temperatura: await getRandomTemperature(),
                 dispositivo: dispositivo._id,
                 fecha: await getFecha(),
@@ -45,7 +45,7 @@ const testAddDataSensorSingle = async (req,res) => {
     //crear valores sensores
     const sensores = new Sensor({
         humedadAmbiente: getRandomHumedadAmbiente(),
-        humedadSuelo: getRandomHumedadSuelo(),
+        humedadSuelo: getRandomHumedadSuelo(1020,1024),
         temperatura: await getRandomTemperature(),
         dispositivo,
         fecha: await getFecha(),
