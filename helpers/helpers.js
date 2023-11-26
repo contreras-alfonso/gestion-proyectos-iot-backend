@@ -1,3 +1,5 @@
+import fetch from 'node-fetch'
+
 const getRandomTemperature = async () => {
     const min = await getTemperature();
     const max = Number(min)+0.50;
@@ -27,11 +29,10 @@ const getRandomHumedadAmbiente = () => {
 };
 
 const getTemperature = async () => {
-    // const responseWeather = await fetch(process.env.RUTA_WEATHER);
-    // const dataWeather = await responseWeather.json();
-    // const temperature = dataWeather.temp_c;
-    // return temperature;
-    return "23.2635"
+    const responseWeather = await fetch(process.env.RUTA_WEATHER);
+    const dataWeather = await responseWeather.json();
+    const temperature = dataWeather.temp_c;
+    return temperature;
 }
 
 const getHora = async () => {
