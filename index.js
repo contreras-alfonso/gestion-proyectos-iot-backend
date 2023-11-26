@@ -47,14 +47,14 @@ app.listen(process.env.PORT, () => {
 });
 
 // Mecanismo de keep-alive: enviar solicitud a sí mismo cada 30 segundos
-setInterval(() => {
-  http.get(`http://localhost:${process.env.PORT}`, (res) => {
-    console.log('Solicitud enviada correctamente');
-    // Puedes manejar la respuesta aquí si es necesario
-  }).on('error', (err) => {
-    console.error(`Error al enviar solicitud: ${err.message}`);
-  });
-}, 60 * 1000); // 30 segundos en milisegundos
+// setInterval(() => {
+//   http.get(`http://localhost:${process.env.PORT}`, (res) => {
+//     console.log('Solicitud enviada correctamente');
+//     // Puedes manejar la respuesta aquí si es necesario
+//   }).on('error', (err) => {
+//     console.error(`Error al enviar solicitud: ${err.message}`);
+//   });
+// }, 60 * 1000); // 30 segundos en milisegundos
 
 const keepAlive = () => {
   http.get(`http://localhost:${process.env.PORT}/sensores/testaddinfo`, (res) => {
@@ -64,7 +64,7 @@ const keepAlive = () => {
   });
 };
 
-setInterval(keepAlive, 5 * 60 * 1000);
+setInterval(keepAlive, 4 * 60 * 1000);
 
 
 //para el riego cada cierto tiempo
