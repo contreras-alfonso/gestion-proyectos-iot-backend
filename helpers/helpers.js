@@ -21,7 +21,8 @@ const getRandomHumedadAmbiente = () => {
     const max = 69;
     const randomFraction = Math.random();
     const randomTemperature = randomFraction * (max - min) + min;
-    const roundedTemperature = parseFloat(randomTemperature.toFixed(2));
+    // const roundedTemperature = parseFloat(randomTemperature.toFixed(2));
+    const roundedTemperature = parseFloat(randomTemperature);
     return roundedTemperature.toString();
 };
 
