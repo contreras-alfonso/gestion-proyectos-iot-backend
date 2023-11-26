@@ -30,6 +30,8 @@ const testAddData = async (req,res) => {
             await sensores.save();
         } 
     }
+
+    res.json({msg:'data test almacenada'})
 }
 
 const testAddDataSensor = async (req,res) => {
