@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAll, testAddData, testSensor } from '../controllers/sensorController.js';
+import { getAll, testAddData, testSensor, testAddDataSensorSingle } from '../controllers/sensorController.js';
 
 
 const router = express.Router();
@@ -7,5 +7,6 @@ const router = express.Router();
 router.get('/testaddinfo', testAddData);  
 router.get('/getAll/:id', getAll);
 router.post('/testJust', testSensor);
+router.post('/testAddDataSensorSingle/:_id', testAddDataSensorSingle);
 
 export default router

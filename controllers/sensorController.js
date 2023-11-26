@@ -34,8 +34,34 @@ const testAddData = async (req,res) => {
     res.json({msg:'data test almacenada'})
 }
 
-const testAddDataSensor = async (req,res) => {
-    const {_id} = req.body;
+const testAddDataSensorSingle = async (req,res) => {
+    const {_id} = req.params;
+
+    const dispositivo = await Dispositivo.findById(_id);
+    if(!dispositivo.estado){
+        res.json({status:false,msg:dispositivo.nombre+' apagado.'})
+        return;
+    }
+    //crear valores sensores
+    const sensores = new Sensor({
+        humedadAmbiente: getRandomHumedadAmbiente(),
+        humedadSuelo: getRandomHumedadSuelo(),
+        temperatura: await getRandomTemperature(),
+        dispositivo,
+        fecha: await getFecha(),
+        hora: await getHora(),
+    })
+    //crear notificacion
+    const notificacion = new Notificacion();
+    notificacion.estado = "3";
+    notificacion.hora = await getHora();
+    notificacion.fecha = await getFecha();
+    notificacion.dispositivo = dispositivo;
+
+    // await sensores.save();
+    // await notificacion.save();
+    // res.json({status:true,msg:'Data test single enviada correctamente.'})
+    res.json({sensores,notificacion})
    
 }
 
@@ -90,4 +116,5 @@ export{
     testAddData,
     getAll,
     testSensor,
+    testAddDataSensorSingle,
 }
