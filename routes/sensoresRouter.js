@@ -4,7 +4,7 @@ import { getAll, testAddData, testSensor } from '../controllers/sensorController
 
 const router = express.Router();
 
-router.get('/testaddinfo', testAddData);
+router.get('/testaddinfo', testAddData);  
 router.get('/getAll/:id', getAll);
 router.post('/testJust', testSensor);
 

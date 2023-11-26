@@ -48,9 +48,21 @@ const testSensor = async (req,res) => {
 
 const getAll = async (req,res) => {
     const {id} = req.params;
-    const dataSensores = await Sensor.find({dispositivo:id});
+    //obtener la data de sensores pero, para la grafica
+    const dataSensoresGrafica = await Sensor.find({dispositivo:id}).limit(10);
+    const dataSensoresGraficaMod = dataSensoresGrafica.map((e,i)=>{
+        const {humedadAmbiente,humedadSuelo,temperatura,fecha,hora,_id} = e;
+        return {
+            humedadAmbiente,
+            humedadSuelo,
+            fechaYhora: fecha+" "+hora,
+            _id,
+            temperatura,
+        }
+    })
     // res.json(dataSensores);
-    const dataModificada = dataSensores.map((e,i)=>{
+    const dataSensoresTable = await Sensor.find({dispositivo:id});
+    const dataSensoresTableMod = dataSensoresTable.map((e,i)=>{
         const {humedadAmbiente,humedadSuelo,temperatura,fecha,hora,_id} = e;
         const fechaFormat = fecha.split('-');
         const horaFormat = hora.split(':');
@@ -64,7 +76,7 @@ const getAll = async (req,res) => {
         }
     })
 
-    res.json(dataModificada.reverse());
+    res.json({dataSensoresGraficaMod,dataSensoresTableMod:dataSensoresTableMod.reverse()});
 }
 
 export{
