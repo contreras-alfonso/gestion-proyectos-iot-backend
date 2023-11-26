@@ -21,7 +21,7 @@ const testAddData = async (req,res) => {
         if (dispositivo.estado) {
             const sensores = new Sensor({
                 humedadAmbiente: getRandomHumedadAmbiente(),
-                humedadSuelo: getRandomHumedadSuelo(),
+                humedadSuelo: getRandomHumedadSuelo(1020,1024),
                 temperatura: await getRandomTemperature(),
                 dispositivo: dispositivo._id,
                 fecha: await getFecha(),
@@ -82,7 +82,7 @@ const testSensor = async (req,res) => {
 const getAll = async (req,res) => {
     const {id} = req.params;
     //obtener la data de sensores pero, para la grafica
-    const dataSensoresGrafica = await Sensor.find({dispositivo:id}).limit(10);
+    const dataSensoresGrafica = await Sensor.find({dispositivo:id}).sort({ _id: -1 }).limit(10);
     const dataSensoresGraficaMod = dataSensoresGrafica.map((e,i)=>{
         const {humedadAmbiente,humedadSuelo,temperatura,fecha,hora,_id} = e;
         return {
@@ -109,7 +109,9 @@ const getAll = async (req,res) => {
         }
     })
 
-    res.json({dataSensoresGraficaMod,dataSensoresTableMod:dataSensoresTableMod.reverse()});
+    res.json({
+        dataSensoresGraficaMod:dataSensoresGraficaMod.reverse(),dataSensoresTableMod:dataSensoresTableMod.reverse()
+    });
 }
 
 export{
