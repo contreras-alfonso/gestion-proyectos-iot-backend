@@ -26,10 +26,11 @@ const getRandomHumedadAmbiente = () => {
 };
 
 const getTemperature = async () => {
-    const responseWeather = await fetch(process.env.RUTA_WEATHER);
-    const dataWeather = await responseWeather.json();
-    const temperature = dataWeather.temp_c;
-    return temperature;
+    // const responseWeather = await fetch(process.env.RUTA_WEATHER);
+    // const dataWeather = await responseWeather.json();
+    // const temperature = dataWeather.temp_c;
+    // return temperature;
+    return "23"
 }
 
 const getHora = async () => {
