@@ -64,7 +64,7 @@ const keepAlive = () => {
   });
 };
 
-setInterval(keepAlive, 4 * 60 * 1000);
+// setInterval(keepAlive, 4 * 60 * 1000);
 
 
 //para el riego cada cierto tiempo
