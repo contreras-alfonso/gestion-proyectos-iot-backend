@@ -88,8 +88,8 @@ const keepAlivePorRuta = (ruta) => {
   });
 };
 
-rutasEIntervalos.forEach((ruta) => {
-  setInterval(() => {
-    keepAlivePorRuta(ruta);
-  }, ruta.intervalo * 60 * 1000); // Convertir a milisegundos
-});
+// rutasEIntervalos.forEach((ruta) => {
+//   setInterval(() => {
+//     keepAlivePorRuta(ruta);
+//   }, ruta.intervalo * 60 * 1000); // Convertir a milisegundos
+// });
