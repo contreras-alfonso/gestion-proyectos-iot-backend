@@ -13,8 +13,6 @@ const verificarAuth = async (req,res,next) => {
 
             req.usuario = await Usuario.findOne({_id:decoded._id}).select("-password -__v");
 
-            console.log(req.usuario);
-
             next()
 
         } catch (error) {
