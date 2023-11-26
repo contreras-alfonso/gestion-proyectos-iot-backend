@@ -32,6 +32,11 @@ const testAddData = async (req,res) => {
     }
 }
 
+const testAddDataSensor = async (req,res) => {
+    const {_id} = req.body;
+   
+}
+
 const testSensor = async (req,res) => {
     
     const {_id} = req.body;

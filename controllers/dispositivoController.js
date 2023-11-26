@@ -28,6 +28,12 @@ const updateDesvincularDispositivo = async (req,res) => {
     dispositivo.planta = idPlantaUpdate;
     dispositivo.estado = false;
     try {
+        const notificacion = new Notificacion();
+        notificacion.estado = "2" ;
+        notificacion.hora = await getHora();
+        notificacion.fecha = await getFecha();
+        notificacion.dispositivo = dispositivo;
+        await notificacion.save();
         await dispositivo.save();
         res.json({status:true,msg:'Dispositivo desvinculado.'})
     } catch (error) {
@@ -83,9 +89,9 @@ const activarRiegoManual = async (req,res) => {
         notificacion.dispositivo = dispositivo;
         await notificacion.save();
         await sensores.save();
-        res.json({status:true,msg:'Riego activado'});
+        res.json({status:true,msg:'Riego activado.'});
     }else{
-        res.json({status:false,msg:'Primero enciende el sistema'});
+        res.json({status:false,msg:'Primero enciende el sistema.'});
     } 
 }
 
@@ -97,5 +103,5 @@ export {
     updateDesvincularDispositivo,
     updateEstadoDispositivo,
     updateAsignarPlantaDispositivo,
-    activarRiegoManual
+    activarRiegoManual,
 }

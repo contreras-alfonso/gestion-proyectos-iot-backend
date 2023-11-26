@@ -11,6 +11,8 @@ import sensoresRouter from './routes/sensoresRouter.js';
 import dashboardRouter from './routes/dashboardRouter.js';
 import usuarioRouter from './routes/usuarioRouter.js';
 import notificacionesRouter from './routes/notificacionRouter.js';
+import http from 'http';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -43,3 +45,13 @@ app.use('/notificaciones',notificacionesRouter);
 app.listen(process.env.PORT, () => {
   console.log(`Servidor escuchando en el puerto ${process.env.PORT}`);
 });
+
+// Mecanismo de keep-alive: enviar solicitud a sí mismo cada 30 segundos
+setInterval(() => {
+  http.get(`http://localhost:${process.env.PORT}`, (res) => {
+    console.log('Solicitud enviada correctamente');
+    // Puedes manejar la respuesta aquí si es necesario
+  }).on('error', (err) => {
+    console.error(`Error al enviar solicitud: ${err.message}`);
+  });
+}, 30 * 1000); // 30 segundos en milisegundos
