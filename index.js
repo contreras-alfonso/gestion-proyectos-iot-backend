@@ -54,7 +54,7 @@ setInterval(() => {
   }).on('error', (err) => {
     console.error(`Error al enviar solicitud: ${err.message}`);
   });
-}, 30 * 1000); // 30 segundos en milisegundos
+}, 60 * 1000); // 30 segundos en milisegundos
 
 const keepAlive = () => {
   http.get(`http://localhost:${process.env.PORT}/sensores/testaddinfo`, (res) => {
@@ -64,15 +64,17 @@ const keepAlive = () => {
   });
 };
 
-// setInterval(keepAlive, 20 * 1000);
+setInterval(keepAlive, 5 * 60 * 1000);
 
+
+//para el riego cada cierto tiempo
 const rutasEIntervalos = [
   { id: '65590aab8ef290c452993fb5', intervalo: 30 },
-  { id: '65590ab68ef290c452993fb8', intervalo: 35 },
-  { id: '65590aba8ef290c452993fbb', intervalo: 40 },
-  { id: '65590abe8ef290c452993fbe', intervalo: 45 },
-  { id: '65590ac28ef290c452993fc1', intervalo: 50 },
-  { id: '65590ac68ef290c452993fc4', intervalo: 55 },
+  { id: '65590ab68ef290c452993fb8', intervalo: 31 },
+  { id: '65590aba8ef290c452993fbb', intervalo: 32 },
+  { id: '65590abe8ef290c452993fbe', intervalo: 33 },
+  { id: '65590ac28ef290c452993fc1', intervalo: 34 },
+  { id: '65590ac68ef290c452993fc4', intervalo: 35 },
 ];
 
 const keepAlivePorRuta = (ruta) => {
@@ -89,5 +91,5 @@ const keepAlivePorRuta = (ruta) => {
 rutasEIntervalos.forEach((ruta) => {
   setInterval(() => {
     keepAlivePorRuta(ruta);
-  }, ruta.intervalo * 1000); // Convertir a milisegundos
+  }, ruta.intervalo * 60 * 1000); // Convertir a milisegundos
 });
