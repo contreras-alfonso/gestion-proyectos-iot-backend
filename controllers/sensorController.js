@@ -58,10 +58,10 @@ const testAddDataSensorSingle = async (req,res) => {
     notificacion.fecha = await getFecha();
     notificacion.dispositivo = dispositivo;
 
-    // await sensores.save();
-    // await notificacion.save();
-    // res.json({status:true,msg:'Data test single enviada correctamente.'})
-    res.json({sensores,notificacion})
+    await sensores.save();
+    await notificacion.save();
+    res.json({status:true,msg:'Data test single enviada correctamente.'})
+
    
 }
 
