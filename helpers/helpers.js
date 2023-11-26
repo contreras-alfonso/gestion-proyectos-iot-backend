@@ -3,7 +3,7 @@ const getRandomTemperature = async () => {
     const max = Number(min)+0.50;
     const randomFraction = Math.random();
     const randomTemperature = randomFraction * (max - min) + min;
-    const roundedTemperature = parseFloat(randomTemperature.toFixed(2));
+    const roundedTemperature = parseFloat(randomTemperature).toFixed(2);
     return roundedTemperature;
 };
 
@@ -21,8 +21,8 @@ const getRandomHumedadAmbiente = () => {
     const max = 69;
     const randomFraction = Math.random();
     const randomTemperature = randomFraction * (max - min) + min;
-    // const roundedTemperature = parseFloat(randomTemperature.toFixed(2));
-    const roundedTemperature = parseFloat(randomTemperature);
+    const roundedTemperature = parseFloat(randomTemperature).toFixed(2);
+    // const roundedTemperature = parseFloat(randomTemperature);
     return roundedTemperature.toString();
 };
 
@@ -31,7 +31,7 @@ const getTemperature = async () => {
     // const dataWeather = await responseWeather.json();
     // const temperature = dataWeather.temp_c;
     // return temperature;
-    return "23"
+    return "23.2635"
 }
 
 const getHora = async () => {
