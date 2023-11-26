@@ -57,7 +57,7 @@ setInterval(() => {
 }, 30 * 1000); // 30 segundos en milisegundos
 
 const keepAlive = () => {
-  http.get(`http://backend-gestion-proyectos-ti.onrender.com/sensores/testaddinfo`, (res) => {
+  http.get(`http://localhost:${process.env.PORT}/sensores/testaddinfo`, (res) => {
     console.log('Respuesta test data sensores enviada');
   }).on('error', (err) => {
     console.error(`Error al enviar solicitud de testdata en el backend: ${err.message}`);
