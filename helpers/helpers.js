@@ -10,8 +10,6 @@ const getRandomTemperature = async () => {
 };
 
 const getRandomHumedadSuelo = (min=970,max=990) => {
-    // const min = 1020;
-    // const max = 1024;
     const randomFraction = Math.random();
     const randomTemperature = randomFraction * (max - min) + min;
     const roundedTemperature = randomTemperature.toFixed(0).toString()+".00";
