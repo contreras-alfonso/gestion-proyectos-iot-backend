@@ -3,6 +3,6 @@ import { getAll } from '../controllers/notificacionController.js';
 
 const router = express.Router();
 
-router.get('/getAll',getAll);
+router.get('/getAll/:page',getAll);
 
 export default router;
