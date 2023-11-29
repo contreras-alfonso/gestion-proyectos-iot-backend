@@ -5,7 +5,7 @@ const getAll = async (req,res) => {
     const {page} = req.params;
     const pageSize = 10;
     const skip = (page-1)*pageSize;
-    const notificaciones = await Notificacion.find().sort({ _id: -1 }).skip(skip).limit(pageSize)
+    const notificaciones = await Notificacion.find().sort({ _id: -1 }).skip(skip).limit(pageSize).populate('dispositivo');
     const totalCount = await Notificacion.countDocuments();
     const startRange = skip+1;   
     const endRange = Math.min(skip+pageSize,totalCount);
