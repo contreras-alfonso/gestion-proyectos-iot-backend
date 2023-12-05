@@ -40,6 +40,9 @@ app.use('/sensores', sensoresRouter);
 app.use('/dashboard',dashboardRouter)
 app.use('/users',usuarioRouter);
 app.use('/notificaciones',notificacionesRouter);
+app.get('/',(req,res)=>{
+  res.json({msg:'server backend'})
+})
 
 // Tu servidor escucha en el puerto 3000
 app.listen(process.env.PORT, () => {
