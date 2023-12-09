@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+import moment from 'moment-timezone';
 
 const getRandomTemperature = async () => {
     const min = await getTemperature();
@@ -49,6 +50,31 @@ const getFecha = async () => {
     return fecha;
 }
 
+const haPasadoAlMenosUnaHora = (fecha, hora) => {
+  
+  if (!fecha || !hora) {
+    console.error('Fecha u hora no proporcionadas.');
+    return false;
+  }
+
+ 
+  const fechaCompletaString = `${hora}T${fecha}`;
+  const fechaCompleta = moment.tz(fechaCompletaString, 'America/Lima');
+
+  if (!fechaCompleta.isValid()) {
+    console.error(`Fecha u hora inválida: ${hora} ${fecha}`);
+    return false;
+  }
+
+  const fechaActual = moment.tz('America/Lima');
+  const diferenciaEnHoras = fechaActual.diff(fechaCompleta, 'hours');
+
+  const diferenciaEnMinutos = 60 - fechaActual.diff(fechaCompleta, 'minutes');
+
+  return {diferenciaEnHoras,diferenciaEnMinutos};
+  }
+
+
 export{
     getRandomTemperature,
     getTemperature,
@@ -56,4 +82,5 @@ export{
     getFecha,
     getRandomHumedadSuelo,
     getRandomHumedadAmbiente,
+    haPasadoAlMenosUnaHora,
 }

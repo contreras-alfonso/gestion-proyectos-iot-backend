@@ -1,4 +1,4 @@
-import { getFecha, getHora, getRandomHumedadAmbiente, getRandomHumedadSuelo, getRandomTemperature } from "../helpers/helpers.js";
+import { getFecha, getHora, getRandomHumedadAmbiente, getRandomHumedadSuelo, getRandomTemperature, haPasadoAlMenosUnaHora } from "../helpers/helpers.js";
 import Dispositivo from "../models/dispositivoModel.js";
 import Notificacion from "../models/notificacionModel.js";
 import Planta from "../models/plantaModel.js"
@@ -71,6 +71,13 @@ const updateAsignarPlantaDispositivo = async (req,res) => {
 
 const activarRiegoManual = async (req,res) => {
     const {_id} = req.body;
+    const ultimaNotificacion = await Notificacion.find().where({dispositivo:_id, estado: "3"}).sort({ _id: -1 }).limit(1);
+     const {diferenciaEnHoras,diferenciaEnMinutos}  = haPasadoAlMenosUnaHora(ultimaNotificacion[0].hora,ultimaNotificacion[0].fecha)
+    // const {diferenciaEnHoras,diferenciaEnMinutos} = haPasadoAlMenosUnaHora("17:39:01","2023-12-09")
+    if(diferenciaEnHoras<1){
+        return res.json({status:false,msg:`${diferenciaEnMinutos} minutos restantes.`});
+    }
+    
     const dispositivo = await Dispositivo.findById(_id);
     if (dispositivo.estado) {
         const sensores = new Sensor({
