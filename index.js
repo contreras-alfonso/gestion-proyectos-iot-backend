@@ -54,7 +54,7 @@ expressServer.listen(process.env.PORT, () => {
 
 const io = new SocketIOServer(expressServer, {
   cors: {
-      origin: "https://viveroplantasyflores.vercel.app/"
+      origin: "*"
   },
 });
 
