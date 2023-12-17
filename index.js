@@ -11,13 +11,15 @@ import sensoresRouter from './routes/sensoresRouter.js';
 import dashboardRouter from './routes/dashboardRouter.js';
 import usuarioRouter from './routes/usuarioRouter.js';
 import notificacionesRouter from './routes/notificacionRouter.js';
-import http from 'http';
+import { createServer } from 'http';
+import { Server as SocketIOServer } from 'socket.io';
 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+const expressServer = createServer(app);
 
 app.use(express.json())
 
@@ -32,6 +34,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 app.use('/images', express.static(join(__dirname, 'public', 'images')));
+app.use('/4a39af0e-5a94-4b46-bc7e-ef8f92608cc7', express.static(join(__dirname, 'public', '4a39af0e-5a94-4b46-bc7e-ef8f92608cc7')));
 
 app.use('/imagenesPlantas',imagenesRouter);
 app.use('/plantas',plantasRouter);
@@ -45,7 +48,30 @@ app.get('/',(req,res)=>{
 })
 
 // Tu servidor escucha en el puerto 3000
-app.listen(process.env.PORT, () => {
+expressServer.listen(process.env.PORT, () => {
   console.log(`Servidor escuchando en el puerto ${process.env.PORT}`);
 });
 
+const io = new SocketIOServer(expressServer, {
+  cors: {
+      origin: "https://viveroplantasyflores.vercel.app/"
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log('Nuevo cliente conectado:', socket.id);
+
+  // Manejar eventos o acciones específicas que podrían surgir aquí
+  // Por ejemplo, cuando recibes el evento 'activarRiego', emites 'cambiarVideo'
+  socket.on('activarRiego', () => {
+    // Tu lógica para activar el riego aquí
+
+    // Emitir un evento para cambiar el video a todos los clientes conectados
+    io.emit('cambiarVideo');
+  });
+
+  // Desconectar al cliente cuando se desconecta
+  socket.on('disconnect', () => {
+    console.log('Cliente desconectado:', socket.id);
+  });
+});
